@@ -13,3 +13,4 @@ C:\HY(紘康)\HY3118withCP2112EK\obj\Debug\GetADCfromHY3118.exe.manifest
 C:\HY(紘康)\HY3118withCP2112EK\obj\Debug\GetADCfromHY3118.application
 C:\HY(紘康)\HY3118withCP2112EK\obj\Debug\GetADCfromHY3118.exe
 C:\HY(紘康)\HY3118withCP2112EK\obj\Debug\GetADCfromHY3118.pdb
+C:\HY(紘康)\HY3118withCP2112EK\obj\Debug\GetADCfromHY3118.csprojAssemblyReference.cache

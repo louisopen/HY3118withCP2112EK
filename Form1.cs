@@ -60,7 +60,7 @@ namespace GetADCfromHY3118
                 SLAB_HID_TO_SMBUS.CP2112_DLL.HidSmbus_Open(ref connectedDevice, 0, vid, pid);
                 // initialize CP2112 device
                 //HID_SMBUS_STATUS HidSmbus_SetSmbusConfig(HID_SMBUS_DEVICE device,DWORD bitRate, BYTE address, BOOL autoReadRespond, WORD writeTimeout,WORD readTimeout, BOOL sclLowTimeout, WORD transferRetries)
-                SLAB_HID_TO_SMBUS.CP2112_DLL.HidSmbus_SetSmbusConfig(connectedDevice, 50000, 0x02, 0, 100, 100, 0, 2);
+                SLAB_HID_TO_SMBUS.CP2112_DLL.HidSmbus_SetSmbusConfig(connectedDevice, 100000, 0x02, 0, 100, 100, 0, 2);
                 //HID_SMBUS_STATUS HidSmbus_SetGpioConfig(HID_SMBUS_DEVICE device,BYTE direction, BYTE mode, BYTE special, BYTE clkDiv)
                 SLAB_HID_TO_SMBUS.CP2112_DLL.HidSmbus_SetGpioConfig(connectedDevice, 0x20, 0x20, 0x13, 0xFF);   //GPIO5 output/push-pull/GPIO0,1,7 special function/clkDiv=48MHz/(2x255)
                 //HID_SMBUS_STATUS HidSmbus_WriteLatch(HID_SMBUS_DEVICE device,BYTE latchValue, BYTE latchMask)
@@ -71,7 +71,8 @@ namespace GetADCfromHY3118
                 SLAB_HID_TO_SMBUS.CP2112_DLL.HidSmbus_WriteRequest(connectedDevice, HY3118SlaveAddress, new byte[] { 0x04, 0x6C }, 2);  //LDO using 3.0V, low speed transfer rate.
                 SLAB_HID_TO_SMBUS.CP2112_DLL.HidSmbus_WriteRequest(connectedDevice, HY3118SlaveAddress, new byte[] { 0x03, 0x40 }, 2);  //clk = 1000KHz
                 SLAB_HID_TO_SMBUS.CP2112_DLL.HidSmbus_WriteRequest(connectedDevice, HY3118SlaveAddress, new byte[] { 0x02, 0x50 }, 2);  //REF input select VDDA&VSSA
-                SLAB_HID_TO_SMBUS.CP2112_DLL.HidSmbus_WriteRequest(connectedDevice, HY3118SlaveAddress, new byte[] { 0x01, 0x1A }, 2);  //Using 0x1A for AN3,AN4 or 0x80 for AN1,AN2 
+                //SLAB_HID_TO_SMBUS.CP2112_DLL.HidSmbus_WriteRequest(connectedDevice, HY3118SlaveAddress, new byte[] { 0x01, 0x1A }, 2);  //Using 0x1A for AN3,AN4 or 0x80 for AN1,AN2 
+                SLAB_HID_TO_SMBUS.CP2112_DLL.HidSmbus_WriteRequest(connectedDevice, HY3118SlaveAddress, new byte[] { 0x01, 0x26 }, 2);  //Using 0x1A for AN3=REFO ,AN4=VSSA 
                 SLAB_HID_TO_SMBUS.CP2112_DLL.HidSmbus_WriteRequest(connectedDevice, HY3118SlaveAddress, new byte[] { 0x00, 0x1C }, 2);  //ENADC, VDDA=3.0V, ENREFO=1.5V
 
                 TickTimer.Start();
@@ -166,12 +167,18 @@ namespace GetADCfromHY3118
 
                 //read the data
                 byte[] readbuff = AddressRead(HY3118SlaveAddress, new byte[] { 0x05 }, 3);  //HY3118 regsister offset is 0x05 
-                                                                                            //store the humidity into an int
+                /*                                                                          //store the humidity into an int
                 if ((readbuff[2] & 0x80) == 0x80)   //Sign(+-)
                 {
                     readbuff[2] &= 0x80;
                 }
                 int adconverter = (readbuff[2] << 16) | (readbuff[1] << 8) | readbuff[0];
+                */
+                if ((readbuff[0] & 0x80) == 0x80)   //Sign(+-)
+                {
+                    readbuff[0] &= 0x80;
+                }
+                int adconverter = (readbuff[0] << 16) | (readbuff[1] << 8) | readbuff[2];
                 //display
                 label1.Text = adconverter.ToString();
             }
