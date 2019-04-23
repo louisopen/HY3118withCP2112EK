@@ -82,9 +82,9 @@
             this.label3.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.label3.Location = new System.Drawing.Point(29, 78);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(202, 24);
+            this.label3.Size = new System.Drawing.Size(177, 24);
             this.label3.TabIndex = 7;
-            this.label3.Text = "Input: AN3 % AN4";
+            this.label3.Text = "Input: AN3-AN4";
             // 
             // Form1
             // 

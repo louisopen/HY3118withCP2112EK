@@ -8,6 +8,8 @@ HY3118 ADC 是一個簡24bit AD轉換器芯片, 利用它本身I2C 介面, 通�
 
 ### Reference
 
-https://www.silabs.com/documents/public/application-notes/an496-hid-usb-to-smbus-api-specification.pdf
+[Silicon Labs](https://www.silabs.com/documents/public/application-notes/an496-hid-usb-to-smbus-api-specification.pdf)
 
-https://www.hycontek.com/tools/3702
+[HYCON](https://www.hycontek.com/tools/3702)
+
+![picture](/picture.jpg)
