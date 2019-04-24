@@ -162,23 +162,19 @@ namespace GetADCfromHY3118
                 Thread.Sleep(500);
                 SLAB_HID_TO_SMBUS.CP2112_DLL.HidSmbus_WriteLatch(connectedDevice, 0, 0x20);     //"Low" active for GPIO5
 
-                //SLAB_HID_TO_SMBUS.CP2112_DLL.HidSmbus_WriteRequest(connectedDevice, HY3118SlaveAddress, new byte[] { 0x03, 0x01 }, 2);
-                //Thread.Sleep(100); //Wait for the conversion to take place
-
                 //read the data
                 byte[] readbuff = AddressRead(HY3118SlaveAddress, new byte[] { 0x05 }, 3);  //HY3118 regsister offset is 0x05 
-                /*                                                                          //store the humidity into an int
-                if ((readbuff[2] & 0x80) == 0x80)   //Sign(+-)
-                {
-                    readbuff[2] &= 0x80;
-                }
-                int adconverter = (readbuff[2] << 16) | (readbuff[1] << 8) | readbuff[0];
-                */
+                int adconverter;
                 if ((readbuff[0] & 0x80) == 0x80)   //Sign(+-)
                 {
                     readbuff[0] &= 0x80;
+                    adconverter = (readbuff[0] << 16) | (readbuff[1] << 8) | readbuff[2];
+                    adconverter = 0 - adconverter;
                 }
-                int adconverter = (readbuff[0] << 16) | (readbuff[1] << 8) | readbuff[2];
+                else
+                {
+                    adconverter = (readbuff[0] << 16) | (readbuff[1] << 8) | readbuff[2];
+                }
                 //display
                 label1.Text = adconverter.ToString();
             }

@@ -8,7 +8,7 @@ HY3118 ADC 是一個簡24bit AD轉換器芯片, 利用它本身I2C 介面, 通�
 範例是使用VS2017 C#編輯/編譯包含了CP2112 DLL.
 
 ### Reference
-
+This C# code will use in testing, so AIN3 with AIN4 connect to the REFO reference 1.5V internally.
 [Silicon Labs API document]https://www.silabs.com/documents/public/application-notes/an496-hid-usb-to-smbus-api-specification.pdf
 
 [HYCON]https://www.hycontek.com/tools/3702
